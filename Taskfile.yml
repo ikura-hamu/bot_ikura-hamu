@@ -1,0 +1,22 @@
+# https://taskfile.dev
+
+version: '3'
+
+silent: true
+
+tasks:
+  up:
+    cmds:
+      - docker compose up -d
+  down:
+    cmds:
+      - docker compose down
+  log:
+    cmds:
+      - docker compose logs bot -f
+  reset:
+    cmds:
+      - docker compose down -v
+  db:
+    cmds:
+      - docker compose exec db mongosh bot
