@@ -7,3 +7,16 @@ services:
       - .:/app
     env_file:
       - ./.env
+  db:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=bot
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - mongodb:/data/db
+
+volumes:
+  mongodb:
