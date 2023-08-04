@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -17,12 +20,20 @@ import (
 )
 
 func main() {
-	uri := "mongodb://root:password@db:27017/bot?authSource=admin"
+	err := godotenv.Load()
+	if err != nil {
+		log.Printf("error while loading .env file: %v", err)
+	}
+
+	uri := conf.GetMongoUri()
 	m, err := migrate.New("file://migrate", uri)
 	if err != nil {
+		log.Fatalf("failed to create migration instance: %v", err)
+	}
+	err = m.Up()
+	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		log.Fatalf("failed to migrate: %v", err)
 	}
-	m.Up()
 
 	ctx := context.Background()
 	c, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
