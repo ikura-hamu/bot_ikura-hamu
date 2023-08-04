@@ -14,9 +14,10 @@ tasks:
   log:
     cmds:
       - docker compose logs bot -f
+    ignore_error: true
   reset:
     cmds:
       - docker compose down -v
   db:
     cmds:
-      - docker compose exec db mongosh bot
+      - docker compose exec db mongosh mongodb://root:password@127.0.0.1:27017/bot?authSource=admin
