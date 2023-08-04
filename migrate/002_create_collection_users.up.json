@@ -1,16 +1,16 @@
 [
   {
-      "create": "users"
+    "create": "users"
   },
   {
-      "createIndexes": "users",
-      "indexes": [
-          {
-              "key": {
-                  "age": 1
-              },
-              "name": "index_age"
-          }
-      ]
+    "createIndexes": "users",
+    "indexes": [
+      {
+        "key": {
+          "age": 1
+        },
+        "name": "index_age"
+      }
+    ]
   }
 ]

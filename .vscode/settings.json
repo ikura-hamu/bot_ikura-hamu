@@ -1,0 +1,15 @@
+{
+  "cSpell.userWords": [
+    "mongosh",
+    "cmds"
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "../migrate/*.up.json",
+        "../migrate/*.down.json"
+      ],
+      "url": "https://json.schemastore.org/mongodb-atlas-search-index-definition.json"
+    }
+  ]
+}
