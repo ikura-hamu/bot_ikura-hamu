@@ -2,26 +2,32 @@ package router
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/ikura-hamu/bot_ikura-hamu/src/handler"
 	"github.com/labstack/echo/v4"
 	traqbot "github.com/traPtitech/traq-bot"
+	"go.uber.org/zap"
 )
 
 type botRouter struct {
-	bh handler.BotHandler
+	bh     handler.BotHandler
+	logger *zap.Logger
 }
 
-func newBotRouter(bh handler.BotHandler) *botRouter {
+func newBotRouter(bh handler.BotHandler, l *zap.Logger) *botRouter {
 	return &botRouter{
-		bh: bh,
+		bh:     bh,
+		logger: l,
 	}
 }
 
 func (br *botRouter) botHandlerFunc(c echo.Context) error {
 	var err error
+	eventHeader := c.Request().Header[http.CanonicalHeaderKey("X-TRAQ-BOT-EVENT")]
+	if len(eventHeader) == 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "no X-TRAQ-BOT-EVENT header")
+	}
 	event := c.Request().Header[http.CanonicalHeaderKey("X-TRAQ-BOT-EVENT")][0]
 	switch event {
 	case traqbot.Ping:
@@ -33,7 +39,7 @@ func (br *botRouter) botHandlerFunc(c echo.Context) error {
 	}
 
 	if err != nil {
-		log.Printf("error: %v", err)
+		br.logger.Error("error", zap.Error(err))
 	}
 
 	return c.NoContent(http.StatusOK)

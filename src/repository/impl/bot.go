@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/mongodb"
@@ -13,22 +12,24 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.uber.org/zap"
 )
 
 type BotRepository struct {
-	c *mongo.Client
+	c      *mongo.Client
+	logger *zap.Logger
 }
 
-func NewBotRepository() *BotRepository {
+func NewBotRepository(l *zap.Logger) *BotRepository {
 	uri := conf.GetMongoUri()
 
 	m, err := migrate.New("file://migrate", uri)
 	if err != nil {
-		log.Fatalf("failed to create migration instance: %v", err)
+		l.Panic("failed to create migration instance", zap.Error(err))
 	}
 	err = m.Up()
 	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
-		log.Fatalf("failed to migrate: %v", err)
+		l.Panic("failed to migrate", zap.Error(err))
 	}
 
 	ctx := context.Background()
@@ -40,9 +41,13 @@ func NewBotRepository() *BotRepository {
 	err = c.Ping(ctx, readpref.Primary())
 	if err != nil {
 		fmt.Println("connection error:", err)
+		l.Panic("db connection failed", zap.Error(err))
 	} else {
-		fmt.Println("connection success")
+		l.Info("connected to db")
 	}
 
-	return &BotRepository{c: c}
+	return &BotRepository{
+		c:      c,
+		logger: l,
+	}
 }

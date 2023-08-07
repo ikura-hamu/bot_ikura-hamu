@@ -5,15 +5,18 @@ import (
 
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
 	traqbot "github.com/traPtitech/traq-bot"
+	"go.uber.org/zap"
 )
 
 type BotHandler struct {
-	br repository.BotRepository
+	br     repository.BotRepository
+	logger *zap.Logger
 }
 
-func NewBotHandler(br repository.BotRepository) *BotHandler {
+func NewBotHandler(br repository.BotRepository, l *zap.Logger) *BotHandler {
 	return &BotHandler{
-		br: br,
+		br:     br,
+		logger: l,
 	}
 }
 
