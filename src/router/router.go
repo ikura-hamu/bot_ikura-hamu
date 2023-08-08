@@ -1,7 +1,10 @@
 package router
 
 import (
+	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/client/dev"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client/traq"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/handler"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository/impl"
 	"github.com/labstack/echo/v4"
@@ -9,8 +12,15 @@ import (
 	"go.uber.org/zap"
 )
 
-func Setup(logger *zap.Logger) {
-	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), traq.NewTraqClient(logger), logger), logger)
+func Setup(logger *zap.Logger, mode conf.Mode) {
+	var client client.Client
+	switch mode {
+	case conf.ProdMode:
+		client = traq.NewTraqClient(logger)
+	case conf.DevMode:
+		client = dev.NewDevClient(logger)
+	}
+	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), client, logger), logger)
 
 	e := echo.New()
 

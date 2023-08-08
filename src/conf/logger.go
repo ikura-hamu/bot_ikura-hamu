@@ -1,22 +1,16 @@
 package conf
 
 import (
-	"os"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-func NewLogger() (*zap.Logger, error) {
+func NewLogger(mode Mode) (*zap.Logger, error) {
 	var logger *zap.Logger
 	var err error
-	mode := "prod"
-	if len(os.Args) >= 2 {
-		mode = os.Args[1]
-	}
 
 	switch mode {
-	case "dev":
+	case DevMode:
 		level := zap.NewAtomicLevel()
 		level.SetLevel(zapcore.DebugLevel)
 
@@ -50,7 +44,6 @@ func NewLogger() (*zap.Logger, error) {
 		}
 	}
 
-	logger.Info("zap", zap.String("mode", mode))
-
+	logger.Info("mode", zap.String("mode", GetModeName(mode)))
 	return logger, nil
 }

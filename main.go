@@ -14,11 +14,13 @@ func main() {
 		log.Printf("error while loading .env file: %v", err)
 	}
 
-	logger, err := conf.NewLogger()
+	mode := conf.GetMode()
+
+	logger, err := conf.NewLogger(mode)
 	if err != nil {
 		log.Printf("failed to init logger: %v", err)
 		return
 	}
 
-	router.Setup(logger)
+	router.Setup(logger, mode)
 }
