@@ -1,6 +1,8 @@
 package router
 
 import (
+	"net/http"
+
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client/dev"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client/traq"
@@ -39,6 +41,7 @@ func Setup(logger *zap.Logger, mode conf.Mode) {
 	e.Use(middleware.Recover())
 
 	e.GET("/bot", bh.botHandlerFunc)
+	e.GET("/ping", func(c echo.Context) error { return c.NoContent(http.StatusOK) })
 
 	e.Start(":8080")
 }

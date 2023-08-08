@@ -7,6 +7,8 @@ services:
       - .:/app
     env_file:
       - ./.env
+    depends_on:
+      - db
 
   db:
     image: mongo
@@ -18,6 +20,7 @@ services:
       - 127.0.0.1:27017:27017
     volumes:
       - mongodb:/data/db
+      - mongoconf:/data/configdb
 
   express:
     image: mongo-express:latest
@@ -34,3 +37,4 @@ services:
 
 volumes:
   mongodb:
+  mongoconf:
