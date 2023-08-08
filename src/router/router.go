@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/ikura-hamu/bot_ikura-hamu/src/client/traq"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/handler"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository/impl"
 	"github.com/labstack/echo/v4"
@@ -9,7 +10,7 @@ import (
 )
 
 func Setup(logger *zap.Logger) {
-	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), logger), logger)
+	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), traq.NewTraqClient(logger), logger), logger)
 
 	e := echo.New()
 
