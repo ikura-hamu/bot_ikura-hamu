@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.16.2
+	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a

@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/payload"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
-	traqbot "github.com/traPtitech/traq-bot"
 	"go.uber.org/zap"
 )
 
@@ -23,6 +23,6 @@ func NewBotHandler(br repository.BotRepository, cl client.Client, l *zap.Logger)
 	}
 }
 
-func (bh *BotHandler) MessageCreatedHandler(c context.Context, payload traqbot.MessageCreatedPayload) error {
-	return nil
+func (bh *BotHandler) MessageCreatedHandler(c context.Context, payload payload.EventMessagePayload) error {
+	return bh.cl.SendMessage(c, payload.ChannelID, payload.PlainText, false)
 }

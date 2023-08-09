@@ -1,14 +1,42 @@
 @url = http://localhost:8080/bot
 @contentType = application/json
 @now = {{$localDatetime 'YYYY-MM-DDThh:mm:ss.msZ' 3 h}}
+@userId = 7265b13d-9e06-42f6-98e3-41ea742f8fb2
 
 ###
 
 POST {{url}}
 Content-Type: {{contentType}}
 X-TRAQ-BOT-TOKEN: {{$dotenv BOT_VERIFICATION_TOKEN}}
-X-TRAQ-BOT-EVENT: PING
+X-TRAQ-BOT-EVENT: PIN
 
 {
   "eventTime": "@now"
+}
+
+###
+
+POST {{url}}
+Content-Type: {{contentType}}
+X-TRAQ-BOT-TOKEN: {{$dotenv BOT_VERIFICATION_TOKEN}}
+X-TRAQ-BOT-EVENT: MESSAGE_CREATED
+
+{
+  "eventTime": "{{now}}",
+  "message": {
+    "id": "{{$guid}}",
+    "user": {
+      "id": "{{userId}}",
+      "name": "takashi_trap",
+      "displayName": "寺田 健二",
+      "iconId": "{{$guid}}",
+      "bot": false
+    },
+    "channelId": "{{$guid}}",
+    "text": "こんにちは",
+    "plainText": "こんにちは",
+    "embedded": [],
+    "createdAt": "{{now}}",
+    "updatedAt": "{{now}}"
+  }
 }

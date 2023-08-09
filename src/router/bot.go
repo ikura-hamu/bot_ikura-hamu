@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/ikura-hamu/bot_ikura-hamu/src/handler"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/payload"
 	"github.com/labstack/echo/v4"
 	traqbot "github.com/traPtitech/traq-bot"
 	"go.uber.org/zap"
@@ -33,7 +34,13 @@ func (br *botRouter) botHandlerFunc(c echo.Context) error {
 	case traqbot.Ping:
 		return c.NoContent(http.StatusNoContent)
 	case traqbot.MessageCreated:
-		err = br.bh.MessageCreatedHandler(c.Request().Context(), traqbot.MessageCreatedPayload{})
+		var body payload.EventMessagePayload
+		err = c.Bind(&body)
+		if err != nil {
+			br.logger.Debug("bad request body", zap.Error(err))
+			return echo.NewHTTPError(http.StatusBadRequest, "bad request body")
+		}
+		err = br.bh.MessageCreatedHandler(c.Request().Context(), body)
 	default:
 		return echo.NewHTTPError(http.StatusNotImplemented, fmt.Sprintf("event '%s' is not implemented", event))
 	}
