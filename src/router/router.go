@@ -40,7 +40,7 @@ func Setup(logger *zap.Logger, mode conf.Mode) {
 	}))
 	e.Use(middleware.Recover())
 
-	e.GET("/bot", bh.botHandlerFunc, botVerifyMiddleware)
+	e.POST("/bot", bh.botHandlerFunc, botVerifyMiddleware)
 
 	e.GET("/ping", func(c echo.Context) error { return c.NoContent(http.StatusOK) })
 
