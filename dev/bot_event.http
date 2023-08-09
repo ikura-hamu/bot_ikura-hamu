@@ -1,0 +1,14 @@
+@url = http://localhost:8080/bot
+@contentType = application/json
+@now = {{$localDatetime 'YYYY-MM-DDThh:mm:ss.msZ' 3 h}}
+
+###
+
+POST {{url}}
+Content-Type: {{contentType}}
+X-TRAQ-BOT-TOKEN: {{$dotenv BOT_VERIFICATION_TOKEN}}
+X-TRAQ-BOT-EVENT: PING
+
+{
+  "eventTime": "@now"
+}
