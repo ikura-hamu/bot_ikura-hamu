@@ -1,0 +1,6 @@
+dev/*
+docs/*
+Taskfile.yml
+compose.yml
+Dockerfile
+.vscode/*
