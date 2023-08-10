@@ -62,7 +62,8 @@ func (bh *BotHandler) MessageCreatedHandler(ctx context.Context, payload payload
 func (mc *messageCreated) init(bh *BotHandler) {
 	mc.mc = make(map[string]func(ctx context.Context, payload payload.EventMessagePayload) error)
 	mc.m = sync.Mutex{}
-	// mc.add(`.*`, bh.echo)
+
+	mc.add(`(にゃん|ニャン)`, bh.cat)
 }
 
 func (mmc *mentionMessageCreated) init(bh *BotHandler) {
@@ -87,4 +88,10 @@ func (mmc *mentionMessageCreated) add(key string, f func(ctx context.Context, pa
 
 func (bh *BotHandler) echo(ctx context.Context, payload payload.EventMessagePayload) error {
 	return bh.cl.SendMessage(ctx, payload.ChannelID, payload.PlainText, true)
+}
+
+func (bh *BotHandler) cat(ctx context.Context, payload payload.EventMessagePayload) error {
+	return bh.cl.SendMessage(ctx, payload.ChannelID,
+		"ふぁぼってにゃん♡体操いくよー！ かっわいい私をふぁぼってにゃん♪にゃん！ 純情過ぎててふぁぼってにゃん♪にゃん！ テンション高くてふぁぼってにゃん♪にゃん！ 性格良すぎてふぁぼってにゃん♪ ふぁぼってにゃ〜ぁ〜ん♪ふぁぼってにゃ〜ぁ〜ん♪ マジでふぁぼってにゃんにゃんにゃ〜ん♪",
+		true)
 }
