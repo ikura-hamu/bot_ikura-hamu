@@ -11,7 +11,7 @@ X-TRAQ-BOT-TOKEN: {{$dotenv BOT_VERIFICATION_TOKEN}}
 X-TRAQ-BOT-EVENT: PING
 
 {
-  "eventTime": "@now"
+  "eventTime": "{{now}}"
 }
 
 ###
@@ -33,9 +33,15 @@ X-TRAQ-BOT-EVENT: MESSAGE_CREATED
       "bot": false
     },
     "channelId": "{{$guid}}",
-    "text": "こんにちは",
-    "plainText": "こんにちは",
-    "embedded": [],
+    "text": "こんにちは @BOT_ikura-hamu",
+    "plainText": "こんにちは @BOT_ikura-hamu",
+    "embedded": [
+      {
+        "raw": "@BOT_ikura-hamu",
+        "type": "user",
+        "id": "{{$dotenv BOT_USER_ID}}"
+      }
+    ],
     "createdAt": "{{now}}",
     "updatedAt": "{{now}}"
   }

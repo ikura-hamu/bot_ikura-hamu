@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
 	"go.uber.org/zap"
 )
@@ -20,6 +21,9 @@ func NewBotHandler(br repository.BotRepository, cl client.Client, l *zap.Logger)
 	}
 
 	mc.init(bh)
+	mmc.init(bh)
 
 	return bh
 }
+
+var botUserId = conf.GetBotUserId()
