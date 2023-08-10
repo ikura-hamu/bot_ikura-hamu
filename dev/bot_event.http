@@ -8,7 +8,7 @@
 POST {{url}}
 Content-Type: {{contentType}}
 X-TRAQ-BOT-TOKEN: {{$dotenv BOT_VERIFICATION_TOKEN}}
-X-TRAQ-BOT-EVENT: PIN
+X-TRAQ-BOT-EVENT: PING
 
 {
   "eventTime": "@now"

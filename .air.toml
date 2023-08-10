@@ -11,7 +11,7 @@ cmd = "go build -o ./tmp/main ."
 # Binary file yields from `cmd`.
 bin = "tmp/main"
 # Customize binary, can setup environment variables when run your app.
-full_bin = "./tmp/main dev"
+full_bin = "./tmp/main"
 # Watch these filename extensions.
 include_ext = ["go"]
 # Ignore these filename extensions or directories.
@@ -47,7 +47,7 @@ rerun = false
 # Delay after each executions
 rerun_delay = 500
 # Add additional arguments when running binary (bin/full_bin). Will run './tmp/main hello world'.
-args_bin = []
+args_bin = ["dev"]
 
 [log]
 # Show log time
