@@ -1,6 +1,8 @@
 module github.com/ikura-hamu/bot_ikura-hamu
 
-go 1.20
+go 1.21
+
+toolchain go1.21.0
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.16.2
