@@ -5,8 +5,10 @@ go 1.21
 toolchain go1.21.0
 
 require (
+	github.com/allegro/bigcache/v3 v3.1.0
 	github.com/golang-migrate/migrate/v4 v4.16.2
 	github.com/google/uuid v1.3.0
+	github.com/hashicorp/go-multierror v1.1.1
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a
@@ -21,7 +23,6 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
-	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect

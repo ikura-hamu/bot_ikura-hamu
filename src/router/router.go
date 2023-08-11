@@ -1,8 +1,10 @@
 package router
 
 import (
+	"context"
 	"net/http"
 
+	"github.com/ikura-hamu/bot_ikura-hamu/src/cache/bigcache"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client/dev"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client/traq"
@@ -22,7 +24,24 @@ func Setup(logger *zap.Logger, mode conf.Mode) {
 	case conf.DevMode:
 		client = dev.NewDevClient(logger)
 	}
-	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), client, logger), logger)
+
+	stampsMap, err := client.GetAllStamps(context.Background())
+	if err != nil {
+		logger.Panic("stamp cache", zap.Error(err))
+		return
+	}
+	stampCache, err := bigcache.NewStampCache(logger)
+	if err != nil {
+		logger.Panic("stamp cache", zap.Error(err))
+		return
+	}
+	err = stampCache.SetStampCache(stampsMap)
+	if err != nil {
+		logger.Panic("stamp cache", zap.Error(err))
+		return
+	}
+
+	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), client, stampCache, logger), logger)
 
 	e := echo.New()
 

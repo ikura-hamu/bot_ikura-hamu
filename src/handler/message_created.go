@@ -64,6 +64,7 @@ func (mc *messageCreated) init(bh *BotHandler) {
 	mc.m = sync.Mutex{}
 
 	mc.add(`(にゃん|ニャン)`, bh.cat)
+	mc.add(`無限`, bh.infinity)
 }
 
 func (mmc *mentionMessageCreated) init(bh *BotHandler) {
@@ -94,4 +95,31 @@ func (bh *BotHandler) cat(ctx context.Context, payload payload.EventMessagePaylo
 	return bh.cl.SendMessage(ctx, payload.ChannelID,
 		"ふぁぼってにゃん♡体操いくよー！ かっわいい私をふぁぼってにゃん♪にゃん！ 純情過ぎててふぁぼってにゃん♪にゃん！ テンション高くてふぁぼってにゃん♪にゃん！ 性格良すぎてふぁぼってにゃん♪ ふぁぼってにゃ〜ぁ〜ん♪ふぁぼってにゃ〜ぁ〜ん♪ マジでふぁぼってにゃんにゃんにゃ〜ん♪",
 		true)
+}
+
+func (bh *BotHandler) infinity(ctx context.Context, payload payload.EventMessagePayload) error {
+	iieStampId, ok, err := bh.sc.GetStampIdByName("iie")
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return ErrInvalidStampName
+	}
+	err = bh.cl.AddStamp(ctx, payload.ID, iieStampId, 1)
+	if err != nil {
+		return err
+	}
+
+	finiteStampId, ok, err := bh.sc.GetStampIdByName("yuugen")
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return ErrInvalidStampName
+	}
+	err = bh.cl.AddStamp(ctx, payload.ID, finiteStampId, 1)
+	if err != nil {
+		return err
+	}
+	return nil
 }

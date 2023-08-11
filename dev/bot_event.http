@@ -17,7 +17,7 @@ X-TRAQ-BOT-EVENT: PING
 ###
 # メンション無しで投稿
 
-@message = にゃん
+@message = 無限
 
 POST {{url}}
 Content-Type: {{contentType}}
@@ -47,7 +47,7 @@ X-TRAQ-BOT-EVENT: MESSAGE_CREATED
 ###
 # メンションして投稿
 
-@message = にゃん
+@mentionMessage = にゃん
 
 POST {{url}}
 Content-Type: {{contentType}}
@@ -66,8 +66,8 @@ X-TRAQ-BOT-EVENT: MESSAGE_CREATED
       "bot": false
     },
     "channelId": "{{$guid}}",
-    "text": "{{message}}",
-    "plainText": "{{message}}",
+    "text": "{{mentionMessage}}",
+    "plainText": "{{mentionMessage}}",
     "embedded": [
       {
         "raw": "@BOT_ikura-hamu",
