@@ -37,7 +37,7 @@ func NewTraqClient(l *zap.Logger) *TraqClient {
 
 	tc := TraqClient{client: client, logger: l.Named("traQ Client")}
 
-	tc.stampCache, err = sc.New[string, uuid.UUID](tc.GetStampIdByName, 24*time.Hour, 48*time.Hour)
+	tc.stampCache, err = sc.New[string, uuid.UUID](tc.getStampIdByName, 24*time.Hour, 48*time.Hour)
 	if err != nil {
 		l.Panic("failed to create stamp cache", zap.Error(err))
 	}
