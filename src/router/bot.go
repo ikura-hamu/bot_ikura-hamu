@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/ikura-hamu/bot_ikura-hamu/pkg/payload"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/handler"
-	"github.com/ikura-hamu/bot_ikura-hamu/src/payload"
 	"github.com/labstack/echo/v4"
 	traqbot "github.com/traPtitech/traq-bot"
 	"go.uber.org/zap"

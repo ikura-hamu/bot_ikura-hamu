@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"sync"
 
-	"github.com/ikura-hamu/bot_ikura-hamu/src/payload"
+	"github.com/ikura-hamu/bot_ikura-hamu/pkg/payload"
 	"go.uber.org/zap"
 )
 
