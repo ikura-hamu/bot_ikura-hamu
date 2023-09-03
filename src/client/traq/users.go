@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/ikura-hamu/bot_ikura-hamu/src/domain"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/model"
 )
 
 func (tc *TraqClient) GetAllUserIds(ctx context.Context) ([]uuid.UUID, error) {
@@ -19,10 +19,10 @@ func (tc *TraqClient) GetAllUserIds(ctx context.Context) ([]uuid.UUID, error) {
 	return userIds, nil
 }
 
-func (tc *TraqClient) GetUserInfo(ctx context.Context, userId uuid.UUID) (*domain.TraqUser, error) {
+func (tc *TraqClient) GetUserInfo(ctx context.Context, userId uuid.UUID) (*model.TraqUser, error) {
 	user, _, err := tc.client.UserApi.GetUser(ctx, userId.String()).Execute()
 	if err != nil {
 		return nil, err
 	}
-	return domain.NewTraqUser(uuid.MustParse(user.Id), user.Name, user.DisplayName, user.Bio), nil
+	return model.NewTraqUser(uuid.MustParse(user.Id), user.Name, user.DisplayName, user.Bio), nil
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/ikura-hamu/bot_ikura-hamu/src/domain"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/model"
 )
 
 var (
@@ -15,6 +15,6 @@ func (dc *DevClient) GetAllUserIds(ctx context.Context) ([]uuid.UUID, error) {
 	return []uuid.UUID{userId1}, nil
 }
 
-func (dc *DevClient) GetUserInfo(ctx context.Context, userId uuid.UUID) (*domain.TraqUser, error) {
-	return domain.NewTraqUser(userId, "ikura-hamu", "いくら・はむ", "ひとこと"), nil
+func (dc *DevClient) GetUserInfo(ctx context.Context, userId uuid.UUID) (*model.TraqUser, error) {
+	return model.NewTraqUser(userId, "ikura-hamu", "いくら・はむ", "ひとこと"), nil
 }
