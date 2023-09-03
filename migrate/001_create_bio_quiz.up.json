@@ -1,0 +1,17 @@
+[
+  {
+    "create":"bio_quiz"
+  },
+  {
+    "createIndexes":"bio_quiz",
+    "indexes":[
+      {
+        "key":{
+          "channel_id":1
+        },
+        "name":"channel_id",
+        "unique":true
+      }
+    ]
+  }
+]
