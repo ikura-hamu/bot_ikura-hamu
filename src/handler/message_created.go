@@ -98,24 +98,18 @@ func (bh *BotHandler) cat(ctx context.Context, payload payload.EventMessagePaylo
 }
 
 func (bh *BotHandler) infinity(ctx context.Context, payload payload.EventMessagePayload) error {
-	iieStampId, ok, err := bh.sc.GetStampIdByName("iie")
+	iieStampId, err := bh.cl.GetStampIdByName(ctx, "iie")
 	if err != nil {
 		return err
-	}
-	if !ok {
-		return ErrInvalidStampName
 	}
 	err = bh.cl.AddStamp(ctx, payload.ID, iieStampId, 1)
 	if err != nil {
 		return err
 	}
 
-	finiteStampId, ok, err := bh.sc.GetStampIdByName("yuugen")
+	finiteStampId, err := bh.cl.GetStampIdByName(ctx, "yuugen")
 	if err != nil {
 		return err
-	}
-	if !ok {
-		return ErrInvalidStampName
 	}
 	err = bh.cl.AddStamp(ctx, payload.ID, finiteStampId, 1)
 	if err != nil {

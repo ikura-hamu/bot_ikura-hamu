@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
 )
 
 func (tc *TraqClient) AddStamp(ctx context.Context, messageId uuid.UUID, stampID uuid.UUID, count int) error {
@@ -27,4 +28,22 @@ func (tc *TraqClient) GetAllStamps(ctx context.Context) (map[string]uuid.UUID, e
 	}
 
 	return stampsMap, nil
+}
+
+func (tc *TraqClient) GetStampIdByName(ctx context.Context, name string) (uuid.UUID, error) {
+	return tc.stampCache.Get(ctx, name)
+}
+
+func (tc *TraqClient) getStampIdByName(ctx context.Context, name string) (uuid.UUID, error) {
+	stamps, err := tc.GetAllStamps(ctx)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	stampId, ok := stamps[name]
+	if !ok {
+		return uuid.Nil, client.ErrInvalidStampName
+	}
+
+	return stampId, nil
 }
