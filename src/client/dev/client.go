@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/google/uuid"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
 	"go.uber.org/zap"
 )
 
@@ -11,6 +12,8 @@ var (
 	iieStampId    uuid.UUID = uuid.MustParse("e03fa967-2c80-1042-b861-cc34d7236dd6")
 	yuugenStampId uuid.UUID = uuid.MustParse("636e3dd4-772f-6bd8-3722-69bd5c2eb1a2")
 )
+
+var _ client.Client = &DevClient{}
 
 type DevClient struct {
 	logger *zap.Logger
