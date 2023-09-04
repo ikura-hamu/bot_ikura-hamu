@@ -10,5 +10,5 @@ import (
 type BotRepository interface {
 	CreateBioQuiz(ctx context.Context, channelId uuid.UUID, messageId uuid.UUID, answer string) error
 	GetNotAnsweredBioQuiz(ctx context.Context, channelId uuid.UUID) (*model.BioQuiz, error)
-	AnswerBioQuiz(ctx context.Context, channelId uuid.UUID) error
+	AnswerBioQuiz(ctx context.Context, id string) error
 }

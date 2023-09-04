@@ -47,7 +47,7 @@ X-TRAQ-BOT-EVENT: MESSAGE_CREATED
 ###
 # メンションして投稿
 
-@mentionMessage = にゃん
+@mentionMessage = @BOT_ikura-hamu ひとことクイズ
 
 POST {{url}}
 Content-Type: {{contentType}}
@@ -65,7 +65,7 @@ X-TRAQ-BOT-EVENT: MESSAGE_CREATED
       "iconId": "{{$guid}}",
       "bot": false
     },
-    "channelId": "{{$guid}}",
+    "channelId": "709f029d-ed11-4376-99ea-4a55a360b927",
     "text": "{{mentionMessage}}",
     "plainText": "{{mentionMessage}}",
     "embedded": [

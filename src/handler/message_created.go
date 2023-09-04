@@ -70,7 +70,7 @@ func (mc *messageCreated) init(bh *BotHandler) {
 func (mmc *mentionMessageCreated) init(bh *BotHandler) {
 	mmc.me = make(map[string]func(ctx context.Context, payload payload.EventMessagePayload) error)
 	mmc.m = sync.Mutex{}
-	mmc.add(`.*`, bh.echo)
+	mmc.add(`ひとことクイズ`, bh.bioQuiz)
 }
 
 func (mc *messageCreated) add(key string, f func(ctx context.Context, payload payload.EventMessagePayload) error) {
@@ -85,10 +85,6 @@ func (mmc *mentionMessageCreated) add(key string, f func(ctx context.Context, pa
 	defer mmc.m.Unlock()
 
 	mmc.me[key] = f
-}
-
-func (bh *BotHandler) echo(ctx context.Context, payload payload.EventMessagePayload) error {
-	return bh.cl.SendMessage(ctx, payload.ChannelID, payload.PlainText, true)
 }
 
 func (bh *BotHandler) cat(ctx context.Context, payload payload.EventMessagePayload) error {

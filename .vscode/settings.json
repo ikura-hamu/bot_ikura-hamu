@@ -12,6 +12,7 @@
   },
   "go.lintTool": "golangci-lint",
   "cSpell.words": [
+    "bson",
     "hamu",
     "ikura"
   ]

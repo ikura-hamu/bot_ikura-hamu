@@ -14,23 +14,32 @@ import (
 )
 
 var (
-	bioQuizQuestionReg = regexp.MustCompile(`ひとことクイズ$`)
+	bioQuizQuestionReg = regexp.MustCompile(`ひとことクイズ\s*$`)
+	bioQuizAnswerReg   = regexp.MustCompile(`[0-9a-zA-Z-_]+\s*$`)
+	giveUpBioQuizReg   = regexp.MustCompile(`あきらめる\s*$`)
 )
 
-func (bh *BotHandler) BioQuiz(ctx context.Context, payload payload.EventMessagePayload) error {
+func (bh *BotHandler) bioQuiz(ctx context.Context, payload payload.EventMessagePayload) error {
 	message := payload.MessagePayload.PlainText
 	if bioQuizQuestionReg.MatchString(message) {
-
+		return bh.bioQuizQuestion(ctx, payload.MessagePayload.ChannelID)
+	}
+	if bioQuizAnswerReg.MatchString(message) {
+		answer := bioQuizAnswerReg.FindString(message)
+		return bh.bioQuizAnswer(ctx, payload.MessagePayload.ChannelID, payload.MessagePayload.User.Name, answer)
+	}
+	if giveUpBioQuizReg.MatchString(message) {
+		return bh.giveUpBioQuiz(ctx, payload.MessagePayload.ChannelID)
 	}
 	return nil
 }
 
 func (bh *BotHandler) bioQuizQuestion(ctx context.Context, channelId uuid.UUID) error {
 	quiz, err := bh.br.GetNotAnsweredBioQuiz(ctx, channelId)
-	if !errors.Is(err, repository.ErrBioQuizNotFound) {
+	if err == nil {
 		message := fmt.Sprintf(
-			"このチャンネルではすでにひとことクイズが出題されています。やめる場合は`@BOT_ikura-hamu ひとことクイズ あきらめる`を、解答する場合は`@BOT_ikura-hamu ひとことクイズ {答え}`と送ってください！\n%s",
-			quiz.ChannelId.String(),
+			"このチャンネルではすでにひとことクイズが出題されています。やめる場合は`@BOT_ikura-hamu ひとことクイズ あきらめる`を、解答する場合は`@BOT_ikura-hamu ひとことクイズ {答え}`と送ってください！\nhttps://q.trap.jp/messages/%s",
+			quiz.MessageId.String(),
 		)
 		err := bh.cl.SendMessage(ctx, channelId, message, false)
 		if err != nil {
@@ -38,7 +47,7 @@ func (bh *BotHandler) bioQuizQuestion(ctx context.Context, channelId uuid.UUID) 
 		}
 		return nil
 	}
-	if err != nil {
+	if err != nil && !errors.Is(err, repository.ErrBioQuizNotFound) {
 		return err
 	}
 
@@ -81,20 +90,21 @@ func (bh *BotHandler) bioQuizAnswer(ctx context.Context, channelId uuid.UUID, us
 		return err
 	}
 
-	if regexp.MustCompile(fmt.Sprintf(`(?i)^%s$`, quiz.Answer)).MatchString(answer) {
+	if regexp.MustCompile(fmt.Sprintf(`(?i)^%s\s*$`, quiz.Answer)).MatchString(answer) {
 		message := fmt.Sprintf("@%s :accepted.pyon:", userName)
 		err := bh.cl.SendMessage(ctx, channelId, message, true)
 		if err != nil {
 			return err
 		}
-		err = bh.br.AnswerBioQuiz(ctx, quiz.ChannelId)
+		err = bh.br.AnswerBioQuiz(ctx, quiz.Id)
 		if err != nil {
 			return err
 		}
 		return nil
 	}
 
-	err = bh.cl.SendMessage(ctx, channelId, ":wrong_answer:", false)
+	message := fmt.Sprintf("@%s :wrong_answer:", userName)
+	err = bh.cl.SendMessage(ctx, channelId, message, false)
 	if err != nil {
 		return err
 	}
@@ -119,7 +129,7 @@ func (bh *BotHandler) giveUpBioQuiz(ctx context.Context, channelId uuid.UUID) er
 	if err != nil {
 		return err
 	}
-	err = bh.br.AnswerBioQuiz(ctx, quiz.ChannelId)
+	err = bh.br.AnswerBioQuiz(ctx, quiz.Id)
 	if err != nil {
 		return err
 	}
