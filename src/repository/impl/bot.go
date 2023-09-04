@@ -9,14 +9,17 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/mongodb"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
+	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"go.uber.org/zap"
 )
 
+var _ repository.BotRepository = &BotRepository{}
+
 type BotRepository struct {
-	c      *mongo.Client
+	db     *mongo.Database
 	logger *zap.Logger
 }
 
@@ -38,6 +41,8 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 		fmt.Printf("error: %v", err)
 	}
 
+	db := c.Database("bot")
+
 	err = c.Ping(ctx, readpref.Primary())
 	if err != nil {
 		fmt.Println("connection error:", err)
@@ -47,7 +52,7 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 	}
 
 	return &BotRepository{
-		c:      c,
+		db:     db,
 		logger: l,
 	}
 }
