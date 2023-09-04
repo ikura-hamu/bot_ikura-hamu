@@ -8,7 +8,6 @@ import (
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/mongodb"
-	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"

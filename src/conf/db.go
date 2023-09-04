@@ -1,6 +1,9 @@
 package conf
 
-import "strings"
+import (
+	"log"
+	"strings"
+)
 
 func GetMongoUri() string {
 	dbName := getEnvOrDefault("NS_MONGODB_DATABASE", "bot")
@@ -12,5 +15,6 @@ func GetMongoUri() string {
 	// return fmt.Sprintf("mongodb://%s:%v@%s:%s/%s?authSource=admin", user, password, hostName, port, dbName)
 	uri := "mongodb://" + user + ":" + password + "@" + hostName + ":" + port + "/" + dbName + "?authSource=admin"
 	uri = strings.ReplaceAll(uri, "%", "%25")
+	log.Println(uri)
 	return uri
 }
