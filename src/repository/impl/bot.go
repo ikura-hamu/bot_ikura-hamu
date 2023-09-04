@@ -2,12 +2,14 @@ package impl
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"fmt"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/mongodb"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -23,13 +25,22 @@ type BotRepository struct {
 	logger *zap.Logger
 }
 
+//go:embed migrate/*.json
+var fs embed.FS
+
 func NewBotRepository(l *zap.Logger) *BotRepository {
 	uri := conf.GetMongoUri()
 
-	m, err := migrate.New("file://migrate", uri)
+	d, err := iofs.New(fs, "migrate")
+	if err != nil {
+		l.Panic("failed to get io/fs driver", zap.Error(err))
+	}
+
+	m, err := migrate.NewWithSourceInstance("iofs", d, uri)
 	if err != nil {
 		l.Panic("failed to create migration instance", zap.Error(err))
 	}
+
 	err = m.Up()
 	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		l.Panic("failed to migrate", zap.Error(err))
