@@ -2,6 +2,7 @@ package dev
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/model"
@@ -16,5 +17,5 @@ func (dc *DevClient) GetAllUserIds(ctx context.Context) ([]uuid.UUID, error) {
 }
 
 func (dc *DevClient) GetUserInfo(ctx context.Context, userId uuid.UUID) (*model.TraqUser, error) {
-	return model.NewTraqUser(userId, "ikura-hamu", "いくら・はむ", "ひとこと"), nil
+	return model.NewTraqUser(userId, "ikura-hamu", "いくら・はむ", "ひとこと", time.Now().Add(-time.Hour)), nil
 }

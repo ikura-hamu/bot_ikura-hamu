@@ -24,5 +24,5 @@ func (tc *TraqClient) GetUserInfo(ctx context.Context, userId uuid.UUID) (*model
 	if err != nil {
 		return nil, err
 	}
-	return model.NewTraqUser(uuid.MustParse(user.Id), user.Name, user.DisplayName, user.Bio), nil
+	return model.NewTraqUser(uuid.MustParse(user.Id), user.Name, user.DisplayName, user.Bio, user.GetLastOnline()), nil
 }
