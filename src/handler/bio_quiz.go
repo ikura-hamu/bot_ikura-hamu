@@ -101,6 +101,31 @@ func (bh *BotHandler) bioQuizAnswer(ctx context.Context, channelId uuid.UUID, us
 	return nil
 }
 
+func (bh *BotHandler) giveUpBioQuiz(ctx context.Context, channelId uuid.UUID) error {
+	quiz, err := bh.br.GetNotAnsweredBioQuiz(ctx, channelId)
+	if errors.Is(err, repository.ErrBioQuizNotFound) {
+		message := "このチャンネルではひとことクイズが出題されていません。出題する場合は`@BOT_ikura-hamu ひとことクイズ`と送ってください！"
+		err := bh.cl.SendMessage(ctx, channelId, message, false)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+
+	err = bh.cl.SendMessage(ctx, channelId, fmt.Sprintf("正解は :@%s: %s さんでした！また遊んでください！！", quiz.Answer, quiz.Answer), false)
+	if err != nil {
+		return err
+	}
+	err = bh.br.AnswerBioQuiz(ctx, quiz.ChannelId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (bh *BotHandler) makeBioQuiz(ctx context.Context, userIds []uuid.UUID) (string, string, error) {
 	for {
 		userId := userIds[rand.Intn(len(userIds))]
