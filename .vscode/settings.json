@@ -9,5 +9,10 @@
   "go.addTags": {
     "options": "",
     "transform": "camelcase"
-  }
+  },
+  "go.lintTool": "golangci-lint",
+  "cSpell.words": [
+    "hamu",
+    "ikura"
+  ]
 }
