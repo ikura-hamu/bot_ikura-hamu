@@ -30,7 +30,7 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 	mongoDBConfig := conf.GetMongoUri()
 
 	ctx := context.Background()
-	option := options.Client().ApplyURI(fmt.Sprintf("%s:%s@%s/%s", mongoDBConfig.User, mongoDBConfig.Password, mongoDBConfig.Host, mongoDBConfig.DatabaseName))
+	option := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s/%s", mongoDBConfig.User, mongoDBConfig.Password, mongoDBConfig.Host, mongoDBConfig.DatabaseName))
 	// SetHosts([]string{mongoDBConfig.Host}).
 	// SetAuth(options.Credential{Username: mongoDBConfig.User, Password: mongoDBConfig.Password, AuthSource: "admin"})
 	c, err := mongo.Connect(ctx, option)
