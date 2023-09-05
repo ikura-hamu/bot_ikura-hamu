@@ -34,8 +34,6 @@ type searchBioQuiz struct {
 
 func (br *BotRepository) GetNotAnsweredBioQuiz(ctx context.Context, channelId uuid.UUID) (*model.BioQuiz, error) {
 	var bioQuiz model.BioQuiz
-	r, _ := bson.Marshal(searchBioQuiz{ChannelId: channelId, IsAnswered: false})
-	fmt.Println(bson.Raw(r))
 	err := br.db.
 		Collection("bio_quiz").
 		FindOne(ctx, searchBioQuiz{ChannelId: channelId, IsAnswered: false}).
