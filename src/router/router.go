@@ -23,7 +23,7 @@ func Setup(logger *zap.Logger, mode conf.Mode) {
 		client = dev.NewDevClient(logger)
 	}
 
-	bh := newBotRouter(*handler.NewBotHandler(impl.NewBotRepository(logger), client, logger), logger)
+	bh := newBotRouter(handler.NewBotHandler(impl.NewBotRepository(logger), client, logger), logger)
 
 	e := echo.New()
 

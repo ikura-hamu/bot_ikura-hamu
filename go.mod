@@ -10,6 +10,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/motoki317/sc v1.6.0
+	github.com/pkg/errors v0.9.1
 	github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a
 	github.com/traPtitech/traq-bot v1.0.2
 	go.mongodb.org/mongo-driver v1.12.1

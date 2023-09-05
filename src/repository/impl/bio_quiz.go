@@ -22,7 +22,7 @@ func (br *BotRepository) CreateBioQuiz(ctx context.Context, channelId uuid.UUID,
 		IsAnswered: false,
 	})
 	if err != nil {
-		return err
+		return handleError(err)
 	}
 	return nil
 }
@@ -44,7 +44,7 @@ func (br *BotRepository) GetNotAnsweredBioQuiz(ctx context.Context, channelId uu
 		return nil, repository.ErrBioQuizNotFound
 	}
 	if err != nil {
-		return nil, err
+		return nil, handleError(err)
 	}
 
 	return &bioQuiz, nil
@@ -54,13 +54,13 @@ func (br *BotRepository) AnswerBioQuiz(ctx context.Context, id string) error {
 	br.logger.Debug("AnswerBioQuiz", zap.String("id", id))
 	objectId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return err
+		return handleError(err)
 	}
 	result, err := br.db.
 		Collection("bio_quiz").
 		UpdateByID(ctx, objectId, map[string]interface{}{"$set": map[string]interface{}{"is_answered": true}})
 	if err != nil {
-		return err
+		return handleError(err)
 	}
 
 	br.logger.Debug("AnswerBioQuiz", zap.Any("result", result))

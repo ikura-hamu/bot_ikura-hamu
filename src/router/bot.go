@@ -12,11 +12,11 @@ import (
 )
 
 type botRouter struct {
-	bh     handler.BotHandler
+	bh     *handler.BotHandler
 	logger *zap.Logger
 }
 
-func newBotRouter(bh handler.BotHandler, l *zap.Logger) *botRouter {
+func newBotRouter(bh *handler.BotHandler, l *zap.Logger) *botRouter {
 	return &botRouter{
 		bh:     bh,
 		logger: l,

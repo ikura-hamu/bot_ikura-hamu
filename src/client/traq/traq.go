@@ -8,6 +8,7 @@ import (
 	"github.com/ikura-hamu/bot_ikura-hamu/src/client"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/motoki317/sc"
+	"github.com/pkg/errors"
 	traq "github.com/traPtitech/go-traq"
 	"go.uber.org/zap"
 )
@@ -43,4 +44,8 @@ func NewTraqClient(l *zap.Logger) *TraqClient {
 	}
 
 	return &tc
+}
+
+func handleError(err error) error {
+	return errors.WithStack(err)
 }

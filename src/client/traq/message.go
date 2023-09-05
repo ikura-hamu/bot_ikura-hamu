@@ -13,7 +13,7 @@ func (tc *TraqClient) SendMessage(ctx context.Context, channelId uuid.UUID, mess
 	req.SetEmbed(embed)
 	_, _, err := tc.client.MessageApi.PostMessage(ctx, channelId.String()).PostMessageRequest(req).Execute()
 	if err != nil {
-		return err
+		return handleError(err)
 	}
 	return nil
 }

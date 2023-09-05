@@ -10,6 +10,7 @@ import (
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
+	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -30,9 +31,8 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 	mongoDBConfig := conf.GetMongoUri()
 
 	ctx := context.Background()
-	option := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s/%s", mongoDBConfig.User, mongoDBConfig.Password, mongoDBConfig.Host, mongoDBConfig.DatabaseName))
-	// SetHosts([]string{mongoDBConfig.Host}).
-	// SetAuth(options.Credential{Username: mongoDBConfig.User, Password: mongoDBConfig.Password, AuthSource: "admin"})
+	option := options.Client().
+		ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s/%s?authSource=admin", mongoDBConfig.User, mongoDBConfig.Password, mongoDBConfig.Host, mongoDBConfig.DatabaseName))
 	c, err := mongo.Connect(ctx, option)
 	if err != nil {
 		l.Panic("db connection failed", zap.Error(err))
@@ -80,4 +80,8 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 		db:     db,
 		logger: l,
 	}
+}
+
+func handleError(err error) error {
+	return errors.WithStack(err)
 }
