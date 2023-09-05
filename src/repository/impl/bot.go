@@ -49,7 +49,7 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 		l.Panic("failed to get io/fs driver", zap.Error(err))
 	}
 
-	migrationDriver, err := mongoMigrate.WithInstance(c, &mongoMigrate.Config{DatabaseName: "mongodb"})
+	migrationDriver, err := mongoMigrate.WithInstance(c, &mongoMigrate.Config{DatabaseName: mongoDBConfig.DatabaseName})
 	defer func() {
 		if err := migrationDriver.Close(); err != nil {
 			l.Panic("failed to close migration driver", zap.Error(err))

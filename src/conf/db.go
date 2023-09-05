@@ -13,8 +13,8 @@ type MongoDBConfig struct {
 }
 
 func GetMongoUri() *MongoDBConfig {
-	dbName := getEnvOrDefault("NS_MONGODB_DATABASE", "bot")
-	hostName := getEnvOrDefault("NS_MONGODB_HOSTNAME", "db")
+	dbName := url.QueryEscape(getEnvOrDefault("NS_MONGODB_DATABASE", "bot"))
+	hostName := url.PathEscape(getEnvOrDefault("NS_MONGODB_HOSTNAME", "db"))
 	password := url.QueryEscape(getEnvOrDefault("NS_MONGODB_PASSWORD", "password"))
 	port := getEnvOrDefault("NS_MONGODB_PORT", "27017")
 	user := url.QueryEscape(getEnvOrDefault("NS_MONGODB_USER", "root"))
