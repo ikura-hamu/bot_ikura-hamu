@@ -22,9 +22,9 @@ func (tc *TraqClient) GetAllStamps(ctx context.Context) (map[string]uuid.UUID, e
 	if err != nil {
 		return nil, handleError(err)
 	}
-	stampsMap := make(map[string]uuid.UUID)
+	stampsMap := make(map[string]uuid.UUID, len(stamps))
 	for s := range stamps {
-		stampsMap[stamps[s].Name] = stampsMap[stamps[s].Id]
+		stampsMap[stamps[s].Name] = uuid.MustParse(stamps[s].Id)
 	}
 
 	return stampsMap, nil
@@ -44,6 +44,5 @@ func (tc *TraqClient) getStampIdByName(ctx context.Context, name string) (uuid.U
 	if !ok {
 		return uuid.Nil, client.ErrInvalidStampName
 	}
-
 	return stampId, nil
 }
