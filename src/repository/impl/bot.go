@@ -32,7 +32,7 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 
 	ctx := context.Background()
 	option := options.Client().
-		ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s/%s?authSource=admin", mongoDBConfig.User, mongoDBConfig.Password, mongoDBConfig.Host, mongoDBConfig.DatabaseName))
+		ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s/%s", mongoDBConfig.User, mongoDBConfig.Password, mongoDBConfig.Host, mongoDBConfig.DatabaseName))
 	c, err := mongo.Connect(ctx, option)
 	if err != nil {
 		l.Panic("db connection failed", zap.Error(err))
