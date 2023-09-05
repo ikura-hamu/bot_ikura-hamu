@@ -3,7 +3,6 @@ package impl
 import (
 	"context"
 	"embed"
-	"fmt"
 
 	"github.com/golang-migrate/migrate/v4"
 	mongoMigrate "github.com/golang-migrate/migrate/v4/database/mongodb"
@@ -32,7 +31,7 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 	ctx := context.Background()
 	option := options.Client().
 		SetHosts([]string{mongoDBConfig.Host}).
-		SetAuth(options.Credential{Username: mongoDBConfig.User, Password: mongoDBConfig.Password})
+		SetAuth(options.Credential{Username: mongoDBConfig.User, Password: mongoDBConfig.Password, AuthSource: "users"})
 	c, err := mongo.Connect(ctx, option)
 	if err != nil {
 		l.Panic("db connection failed", zap.Error(err))
@@ -40,7 +39,6 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 
 	err = c.Ping(ctx, readpref.Primary())
 	if err != nil {
-		fmt.Println("connection error:", err)
 		l.Panic("db connection failed", zap.Error(err))
 	} else {
 		l.Info("connected to db")
