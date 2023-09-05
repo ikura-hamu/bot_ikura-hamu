@@ -38,6 +38,14 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 		fmt.Printf("error: %v", err)
 	}
 
+	err = c.Ping(ctx, readpref.Primary())
+	if err != nil {
+		fmt.Println("connection error:", err)
+		l.Panic("db connection failed", zap.Error(err))
+	} else {
+		l.Info("connected to db")
+	}
+
 	d, err := iofs.New(fs, "migrate")
 	if err != nil {
 		l.Panic("failed to get io/fs driver", zap.Error(err))
@@ -68,14 +76,6 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 	l.Info("migration completed", zap.Uint("previous", current), zap.Uint("new", new))
 
 	db := c.Database(mongoDBConfig.DatabaseName)
-
-	err = c.Ping(ctx, readpref.Primary())
-	if err != nil {
-		fmt.Println("connection error:", err)
-		l.Panic("db connection failed", zap.Error(err))
-	} else {
-		l.Info("connected to db")
-	}
 
 	return &BotRepository{
 		db:     db,
