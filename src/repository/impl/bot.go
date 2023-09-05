@@ -35,7 +35,7 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 		SetAuth(options.Credential{Username: mongoDBConfig.User, Password: mongoDBConfig.Password, AuthSource: "admin"})
 	c, err := mongo.Connect(ctx, option)
 	if err != nil {
-		fmt.Printf("error: %v", err)
+		l.Panic("db connection failed", zap.Error(err))
 	}
 
 	err = c.Ping(ctx, readpref.Primary())
