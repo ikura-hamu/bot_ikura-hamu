@@ -39,12 +39,12 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 
 	db := c.Database(mongoDBConfig.DatabaseName)
 
-	err = db.Client().Ping(ctx, readpref.Primary())
-	if err != nil {
-		l.Panic("db connection failed", zap.Error(err))
-	} else {
-		l.Info("connected to db")
-	}
+	// err = db.Client().Ping(ctx, readpref.Primary())
+	// if err != nil {
+	// 	l.Panic("db connection failed", zap.Error(err))
+	// } else {
+	// 	l.Info("connected to db")
+	// }
 
 	d, err := iofs.New(fs, "migrate")
 	if err != nil {
