@@ -3,11 +3,10 @@ package impl
 import (
 	"context"
 	"embed"
-	"errors"
 	"fmt"
 
 	"github.com/golang-migrate/migrate/v4"
-	_ "github.com/golang-migrate/migrate/v4/database/mongodb"
+	mongoMigrate "github.com/golang-migrate/migrate/v4/database/mongodb"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/conf"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
@@ -28,30 +27,47 @@ type BotRepository struct {
 var fs embed.FS
 
 func NewBotRepository(l *zap.Logger) *BotRepository {
-	uri := conf.GetMongoUri()
+	mongoDBConfig := conf.GetMongoUri()
+
+	ctx := context.Background()
+	option := options.Client().
+		SetHosts([]string{mongoDBConfig.Host}).
+		SetAuth(options.Credential{Username: mongoDBConfig.User, Password: mongoDBConfig.Password, AuthSource: "admin"})
+	c, err := mongo.Connect(ctx, option)
+	if err != nil {
+		fmt.Printf("error: %v", err)
+	}
 
 	d, err := iofs.New(fs, "migrate")
 	if err != nil {
 		l.Panic("failed to get io/fs driver", zap.Error(err))
 	}
 
-	m, err := migrate.NewWithSourceInstance("iofs", d, uri)
+	migrationDriver, err := mongoMigrate.WithInstance(c, &mongoMigrate.Config{DatabaseName: "mongodb"})
+	defer func() {
+		if err := migrationDriver.Close(); err != nil {
+			l.Panic("failed to close migration driver", zap.Error(err))
+		}
+	}()
+	if err != nil {
+		l.Panic("failed to create migrate driver", zap.Error(err))
+	}
+
+	m, err := migrate.NewWithInstance("iofs", d, "mongodb", migrationDriver)
 	if err != nil {
 		l.Panic("failed to create migration instance", zap.Error(err))
 	}
 
+	current, _, _ := m.Version()
 	err = m.Up()
-	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
+	if err != nil && err != migrate.ErrNoChange {
 		l.Panic("failed to migrate", zap.Error(err))
 	}
+	new, _, _ := m.Version()
 
-	ctx := context.Background()
-	c, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
-	if err != nil {
-		fmt.Printf("error: %v", err)
-	}
+	l.Info("migration completed", zap.Uint("previous", current), zap.Uint("new", new))
 
-	db := c.Database("bot")
+	db := c.Database(mongoDBConfig.DatabaseName)
 
 	err = c.Ping(ctx, readpref.Primary())
 	if err != nil {

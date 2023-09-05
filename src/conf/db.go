@@ -1,20 +1,27 @@
 package conf
 
 import (
-	"log"
-	"strings"
+	"fmt"
 )
 
-func GetMongoUri() string {
+type MongoDBConfig struct {
+	Host         string
+	DatabaseName string
+	User         string
+	Password     string
+}
+
+func GetMongoUri() *MongoDBConfig {
 	dbName := getEnvOrDefault("NS_MONGODB_DATABASE", "bot")
 	hostName := getEnvOrDefault("NS_MONGODB_HOSTNAME", "db")
 	password := getEnvOrDefault("NS_MONGODB_PASSWORD", "password")
 	port := getEnvOrDefault("NS_MONGODB_PORT", "27017")
 	user := getEnvOrDefault("NS_MONGODB_USER", "root")
 
-	// return fmt.Sprintf("mongodb://%s:%v@%s:%s/%s?authSource=admin", user, password, hostName, port, dbName)
-	uri := "mongodb://" + user + ":" + password + "@" + hostName + ":" + port + "/" + dbName + "?authSource=admin"
-	uri = strings.ReplaceAll(uri, "%", "%25")
-	log.Println(uri)
-	return uri
+	return &MongoDBConfig{
+		Host:         fmt.Sprintf("%s:%s", hostName, port),
+		DatabaseName: dbName,
+		User:         user,
+		Password:     password,
+	}
 }
