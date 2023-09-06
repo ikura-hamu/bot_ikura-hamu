@@ -88,9 +88,10 @@ func (mmc *mentionMessageCreated) add(key string, f func(ctx context.Context, pa
 }
 
 func (bh *BotHandler) cat(ctx context.Context, payload payload.EventMessagePayload) error {
-	return bh.cl.SendMessage(ctx, payload.ChannelID,
+	_, err := bh.cl.SendMessage(ctx, payload.ChannelID,
 		"ふぁぼってにゃん♡体操いくよー！ かっわいい私をふぁぼってにゃん♪にゃん！ 純情過ぎててふぁぼってにゃん♪にゃん！ テンション高くてふぁぼってにゃん♪にゃん！ 性格良すぎてふぁぼってにゃん♪ ふぁぼってにゃ〜ぁ〜ん♪ふぁぼってにゃ〜ぁ〜ん♪ マジでふぁぼってにゃんにゃんにゃ〜ん♪",
 		true)
+	return err
 }
 
 func (bh *BotHandler) infinity(ctx context.Context, payload payload.EventMessagePayload) error {

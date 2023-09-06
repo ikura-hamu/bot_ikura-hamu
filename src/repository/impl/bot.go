@@ -53,11 +53,6 @@ func NewBotRepository(l *zap.Logger) *BotRepository {
 	}
 
 	migrationDriver, err := mongoMigrate.WithInstance(c, &mongoMigrate.Config{DatabaseName: mongoDBConfig.DatabaseName})
-	defer func() {
-		if err := migrationDriver.Close(); err != nil {
-			l.Panic("failed to close migration driver", zap.Error(err))
-		}
-	}()
 	if err != nil {
 		l.Panic("failed to create migrate driver", zap.Error(err))
 	}

@@ -41,7 +41,7 @@ func (bh *BotHandler) bioQuizQuestion(ctx context.Context, channelId uuid.UUID) 
 			"このチャンネルではすでにひとことクイズが出題されています。やめる場合は`@BOT_ikura-hamu ひとことクイズ あきらめる`を、解答する場合は`@BOT_ikura-hamu ひとことクイズ {答え}`と送ってください！\nhttps://q.trap.jp/messages/%s",
 			quiz.MessageId.String(),
 		)
-		err := bh.cl.SendMessage(ctx, channelId, message, false)
+		_, err := bh.cl.SendMessage(ctx, channelId, message, false)
 		if err != nil {
 			return err
 		}
@@ -64,12 +64,12 @@ func (bh *BotHandler) bioQuizQuestion(ctx context.Context, channelId uuid.UUID) 
 		"ひとことが\n> %s \nの人は誰でしょう?\n\n答えは`@BOT_ikura-hamu ひとことクイズ {答え}`と送ってください！",
 		digestBio(bio),
 	)
-	err = bh.cl.SendMessage(ctx, channelId, message, false)
+	messageId, err := bh.cl.SendMessage(ctx, channelId, message, false)
 	if err != nil {
 		return err
 	}
 
-	err = bh.br.CreateBioQuiz(ctx, channelId, uuid.New(), name)
+	err = bh.br.CreateBioQuiz(ctx, channelId, messageId, name)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func (bh *BotHandler) bioQuizAnswer(ctx context.Context, channelId uuid.UUID, us
 	quiz, err := bh.br.GetNotAnsweredBioQuiz(ctx, channelId)
 	if errors.Is(err, repository.ErrBioQuizNotFound) {
 		message := "このチャンネルではひとことクイズが出題されていません。出題する場合は`@BOT_ikura-hamu ひとことクイズ`と送ってください！"
-		err := bh.cl.SendMessage(ctx, channelId, message, false)
+		_, err := bh.cl.SendMessage(ctx, channelId, message, false)
 		if err != nil {
 			return err
 		}
@@ -92,7 +92,7 @@ func (bh *BotHandler) bioQuizAnswer(ctx context.Context, channelId uuid.UUID, us
 
 	if regexp.MustCompile(fmt.Sprintf(`(?i)^%s\s*$`, quiz.Answer)).MatchString(answer) {
 		message := fmt.Sprintf("@%s :accepted.pyon:", userName)
-		err := bh.cl.SendMessage(ctx, channelId, message, true)
+		_, err := bh.cl.SendMessage(ctx, channelId, message, true)
 		if err != nil {
 			return err
 		}
@@ -104,7 +104,7 @@ func (bh *BotHandler) bioQuizAnswer(ctx context.Context, channelId uuid.UUID, us
 	}
 
 	message := fmt.Sprintf("@%s :wrong_answer:", userName)
-	err = bh.cl.SendMessage(ctx, channelId, message, false)
+	_, err = bh.cl.SendMessage(ctx, channelId, message, false)
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (bh *BotHandler) giveUpBioQuiz(ctx context.Context, channelId uuid.UUID) er
 	quiz, err := bh.br.GetNotAnsweredBioQuiz(ctx, channelId)
 	if errors.Is(err, repository.ErrBioQuizNotFound) {
 		message := "このチャンネルではひとことクイズが出題されていません。出題する場合は`@BOT_ikura-hamu ひとことクイズ`と送ってください！"
-		err := bh.cl.SendMessage(ctx, channelId, message, false)
+		_, err := bh.cl.SendMessage(ctx, channelId, message, false)
 		if err != nil {
 			return err
 		}
@@ -125,7 +125,7 @@ func (bh *BotHandler) giveUpBioQuiz(ctx context.Context, channelId uuid.UUID) er
 		return err
 	}
 
-	err = bh.cl.SendMessage(ctx, channelId, fmt.Sprintf("正解は :@%s: %s さんでした！また遊んでください！！", quiz.Answer, quiz.Answer), false)
+	_, err = bh.cl.SendMessage(ctx, channelId, fmt.Sprintf("正解は :@%s: %s さんでした！また遊んでください！！", quiz.Answer, quiz.Answer), false)
 	if err != nil {
 		return err
 	}

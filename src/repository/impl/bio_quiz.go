@@ -3,12 +3,10 @@ package impl
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/model"
 	"github.com/ikura-hamu/bot_ikura-hamu/src/repository"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"

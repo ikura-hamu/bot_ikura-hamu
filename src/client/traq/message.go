@@ -7,13 +7,13 @@ import (
 	"github.com/traPtitech/go-traq"
 )
 
-func (tc *TraqClient) SendMessage(ctx context.Context, channelId uuid.UUID, message string, embed bool) error {
+func (tc *TraqClient) SendMessage(ctx context.Context, channelId uuid.UUID, message string, embed bool) (uuid.UUID, error) {
 	var req traq.PostMessageRequest
 	req.SetContent(message)
 	req.SetEmbed(embed)
-	_, _, err := tc.client.MessageApi.PostMessage(ctx, channelId.String()).PostMessageRequest(req).Execute()
+	mes, _, err := tc.client.MessageApi.PostMessage(ctx, channelId.String()).PostMessageRequest(req).Execute()
 	if err != nil {
-		return handleError(err)
+		return uuid.Nil, handleError(err)
 	}
-	return nil
+	return uuid.MustParse(mes.Id), nil
 }
