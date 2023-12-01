@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.2
-	github.com/motoki317/sc v1.6.0
+	github.com/motoki317/sc v1.7.1
 	github.com/pkg/errors v0.9.1
 	github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a
 	github.com/traPtitech/traq-bot v1.0.2
