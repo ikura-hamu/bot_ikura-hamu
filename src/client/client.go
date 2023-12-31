@@ -13,4 +13,7 @@ type Client interface {
 	GetStampIdByName(ctx context.Context, name string) (uuid.UUID, error)
 	GetAllUserIds(ctx context.Context) ([]uuid.UUID, error)
 	GetUserInfo(ctx context.Context, userId uuid.UUID) (*model.TraqUser, error)
+
+	JoinChannel(ctx context.Context, channelId uuid.UUID) error
+	LeaveChannel(ctx context.Context, channelId uuid.UUID) error
 }
