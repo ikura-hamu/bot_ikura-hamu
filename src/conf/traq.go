@@ -13,3 +13,7 @@ func GetBotToken() string {
 func GetBotUserId() string {
 	return os.Getenv("BOT_USER_ID")
 }
+
+func GetBotId() string {
+	return os.Getenv("BOT_ID")
+}
