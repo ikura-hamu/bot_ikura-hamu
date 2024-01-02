@@ -6,7 +6,7 @@ toolchain go1.21.0
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.17.0
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.5.0
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/motoki317/sc v1.7.1
