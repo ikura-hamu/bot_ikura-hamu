@@ -71,8 +71,8 @@ func (mmc *mentionMessageCreated) init(bh *BotHandler) {
 	mmc.me = make(map[string]func(ctx context.Context, payload payload.EventMessagePayload) error)
 	mmc.m = sync.Mutex{}
 	mmc.add(`ひとことクイズ`, bh.bioQuiz)
-	mmc.add(`join`, bh.join)
-	mmc.add(`leave`, bh.leave)
+	mmc.add(`join\s*$`, bh.join)
+	mmc.add(`leave\s*$`, bh.leave)
 }
 
 func (mc *messageCreated) add(key string, f func(ctx context.Context, payload payload.EventMessagePayload) error) {
