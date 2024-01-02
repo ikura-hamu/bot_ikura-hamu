@@ -2,14 +2,8 @@ package handler
 
 import (
 	"context"
-	"regexp"
 
 	"github.com/ikura-hamu/bot_ikura-hamu/pkg/payload"
-)
-
-var (
-	joinMessageReg  = regexp.MustCompile(`join\s*$`)
-	leaveMessageReg = regexp.MustCompile(`leave\s*$`)
 )
 
 func (bh *BotHandler) join(ctx context.Context, payload payload.EventMessagePayload) error {
