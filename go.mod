@@ -13,7 +13,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a
 	github.com/traPtitech/traq-bot v1.0.2
-	go.mongodb.org/mongo-driver v1.13.1
+	go.mongodb.org/mongo-driver v1.14.0
 	go.uber.org/zap v1.26.0
 )
 
