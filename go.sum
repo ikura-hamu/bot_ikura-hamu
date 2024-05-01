@@ -64,8 +64,8 @@ github.com/montanaflynn/stats v0.7.1 h1:etflOAAHORrCC44V+aR6Ftzort912ZU+YLiSTuV8
 github.com/montanaflynn/stats v0.7.1/go.mod h1:etXPPgVO6n31NxCd9KQUMvCM+ve0ruNzt6R8Bnaayow=
 github.com/morikuni/aec v1.0.0 h1:nP9CBfwrvYnBRgY6qfDQkygYDmYwOilePFkwzv4dU8A=
 github.com/morikuni/aec v1.0.0/go.mod h1:BbKIizmSmc5MMPqRYbxO4ZU0S0+P200+tUnFx7PXmsc=
-github.com/motoki317/sc v1.7.1 h1:jf/zoTVi2Pl0VRdijgG8/cKXTatBbhbp4wKtAugpCeU=
-github.com/motoki317/sc v1.7.1/go.mod h1:JFH2KPwRS2StSoQuaMu0e4Kt7ebx439E6MW72Qqg2eQ=
+github.com/motoki317/sc v1.8.1 h1:2WcCDvuqwbthjEXey/AMoOsTbsXsyh3b6NTpTzJON7g=
+github.com/motoki317/sc v1.8.1/go.mod h1:hB1MaSQaz8ujgCJVRj7iiZQ7x0vivDcar4vrRi3e+EU=
 github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8Oi/yOhh5U=
 github.com/opencontainers/go-digest v1.0.0/go.mod h1:0JzlMkj0TRzQZfJkVvzbP0HBR3IKzErnv2BNG4W4MAM=
 github.com/opencontainers/image-spec v1.0.2 h1:9yCKha/T5XdGtO0q9Q9a6T5NUCsTn/DrBg0D7ufOcFM=
@@ -76,8 +76,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
-github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
-github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
+github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
+github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a h1:kVLqDo4Q1H2aa5ENHvvDWKlbHsogH1u/BZqmn9q0GTk=
 github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a/go.mod h1:4kOuFQDQ6M35pt3FVx40Gz0MXXGBVsgGlEDphe1nbJY=
 github.com/traPtitech/traq-bot v1.0.2 h1:Dz2ZeSTC7QOo8/bOBAMODYUF46/MSdDJ//ubBAhrGMw=
