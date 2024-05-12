@@ -80,6 +80,8 @@ github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcU
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a h1:kVLqDo4Q1H2aa5ENHvvDWKlbHsogH1u/BZqmn9q0GTk=
 github.com/traPtitech/go-traq v0.0.0-20230720010114-3bada4b8a73a/go.mod h1:4kOuFQDQ6M35pt3FVx40Gz0MXXGBVsgGlEDphe1nbJY=
+github.com/traPtitech/go-traq v0.0.0-20240509050113-9343acbeec35 h1:NoEvHqFhmtyy7ELLp1chwM4R1vhXw2zKeEotkmKvSJw=
+github.com/traPtitech/go-traq v0.0.0-20240509050113-9343acbeec35/go.mod h1:7yJs1m/ddCG39XF78GA8FrXqyc4fNPfHp8BSLjMVMY8=
 github.com/traPtitech/traq-bot v1.0.2 h1:Dz2ZeSTC7QOo8/bOBAMODYUF46/MSdDJ//ubBAhrGMw=
 github.com/traPtitech/traq-bot v1.0.2/go.mod h1:H8NDXjWI9isEJNMXaGUr4/g4JeqThr7Mt3dNmVTW/fs=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
@@ -125,6 +127,8 @@ golang.org/x/net v0.19.0 h1:zTwKpTd2XuCqf8huc7Fo2iSy+4RHPd10s4KzeTnVr1c=
 golang.org/x/net v0.19.0/go.mod h1:CfAk/cbD4CthTvqiEl8NpboMuiuOYsAr/7NOjZJtv1U=
 golang.org/x/oauth2 v0.14.0 h1:P0Vrf/2538nmC0H+pEQ3MNFRRnVR7RlqyVw+bvm26z0=
 golang.org/x/oauth2 v0.14.0/go.mod h1:lAtNWgaWfL4cm7j2OV8TxGi9Qb7ECORx8DktCY74OwM=
+golang.org/x/oauth2 v0.20.0 h1:4mQdhULixXKP1rwYBW0vAijoXnkTG0BLCDRzfe1idMo=
+golang.org/x/oauth2 v0.20.0/go.mod h1:XYTD2NtWslqkgxebSiOHnXEap4TF09sJSc7H1sXbhtI=
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.5.0 h1:60k92dhOjHxJkrqnwsfl8KuaHbn/5dl0lUPUklKo3qE=

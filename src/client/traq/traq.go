@@ -30,7 +30,7 @@ func NewTraqClient(l *zap.Logger) *TraqClient {
 	clientConf.AddDefaultHeader("Authorization", "Bearer "+token)
 	client := traq.NewAPIClient(clientConf)
 
-	me, _, err := client.MeApi.GetMe(context.Background()).Execute()
+	me, _, err := client.MeApi.GetOIDCUserInfo(context.Background()).Execute()
 	if err != nil {
 		l.Panic("invalid client", zap.Error(err))
 	}
